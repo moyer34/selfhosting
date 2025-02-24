@@ -1,0 +1,2 @@
+# selfhosting
+Selfhosting documentation.
