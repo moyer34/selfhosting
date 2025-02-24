@@ -26,7 +26,7 @@ Important: Cloudflare will deliver SSL encryption from the public internet, and 
 - Back on the page listing all tunnels in the account, select the 3-dot menu for the new tunnel and press Configure
 - Under "Install and run," choose docker environment and copy the command somewhere temporarily. Do not run the command, we just need the token to insert into the docker compose environment file
 
-## Set up service stack using Docker Compose
+## 2-Set up service stack using Docker Compose
 We will set up a service stack using docker compose. There are alternatives to this approach, but I’ve had success including the service I want to point to, NPM, and Cloudflared in the same docker compose file. This makes the docker network config more intuitive.
 
 Sample docker-compose.yml:
@@ -98,7 +98,7 @@ The docker networks are set up intentionally to isolate services.
 
 Thus NPM is serving its purpose as a reverse proxy, taking subdomain requests from the tunnel and shuffling them to the correct internal service ip and port. You can also skip NPM and send the tunnel directly to the end services, but I like this bit of complexity since it isolates the surface accessible from the tunnel. Note that in external, NPM is reserved a static ip in the docker network. This is so that the cloudflare tunnel can always point the subdomain to the same IP address. I had instances where after updates the NPM IP address changed on me, causing a 404 error.
 
-### Configuring Nginx Proxy Manager
+## 3-Configuring Nginx Proxy Manager
 For each service, set up a proxy host in the Nginx Proxy Manager admin interface as follows:
 - *Domain Names:* enter the full domain as you would in a browser. NPM will see this coming in from Cloudflare 
 - *Forward Hostname / IP:* point to the IP of the service (or better yet the service container_name). In the example docker compose, "chatpad".
